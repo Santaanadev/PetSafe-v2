@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PetSafe - Rastreamento</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../app/css/style-ras.css">
+  <link rel="shortcut icon" href="../Public/imagens/logo.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    /* Altura e estilo do mapa */
+    .map-container {
+      width: 100%;
+      height: 500px;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    /* Lista de pets no modal */
+    .my-pets-list {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .pet-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f2f2f2;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .pet-item button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .pet-item button:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+
+<body>
+  <header>Rastreamento de Pets</header>
+  <main>  
+    <div class="controls-header">
+      <h2>Mapa de Localização</h2>
+      <div class="buttons-container">
+        <select id="mapStyle" class="map-style-select">
+          <option value="streets">Ruas</option>
+          <option value="satellite">Satélite</option>
+          <option value="terrain">Terreno</option>
+        </select>
+        <button id="myPetsBtn" class="btn btn-secondary">🐾 Meus Pets</button>
+        <button id="addPetBtn" class="btn btn-primary">+ Adicionar Pet</button>
+      </div>
+    </div>
+
+    <div class="map-container">
+      <div id="map"></div>
+    </div>
+
+    <section id="selectedAnimalDetails" class="selected-animal-details hidden">
+      <h3>Detalhes do Pet Selecionado</h3>
+      <div id="animalDetailsContent" class="animal-details-grid"></div>
+    </section>
+  </main>
+
+  <!-- Modal Cadastrar Pet -->
+  <div id="petModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Cadastrar Novo Pet</h3>
+        <button class="close-btn">&times;</button>
+      </div>
+      <div class="form-group">
+        <label for="petNome">Nome do Pet</label>
+        <input type="text" id="petNome" placeholder="Ex: Bob">
+      </div>
+      <div class="form-group">
+        <label for="petEspecie">Espécie</label>
+        <input type="text" id="petEspecie" placeholder="Ex: Cachorro">
+      </div>
+      <div class="form-group">
+        <label for="petStatus">Status</label>
+        <select id="petStatus">
+          <option value="Ativo">Ativo</option>
+          <option value="Inativo">Inativo</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="petLat">Latitude</label>
+        <input type="number" id="petLat" placeholder="Clique no mapa para preencher">
+      </div>
+      <div class="form-group">
+        <label for="petLng">Longitude</label>
+        <input type="number" id="petLng" placeholder="Clique no mapa para preencher">
+      </div>
+      <div class="modal-actions">
+        <button id="cancelPet" class="btn">Cancelar</button>
+        <button id="savePet" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Meus Pets -->
+  <div id="myPetsModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🐾 Meus Pets</h3>
+        <button class="close-btn" id="closeMyPets">&times;</button>
+      </div>
+      <div id="myPetsList" class="my-pets-list">
+        <p>Carregando pets...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  
+  <script src="script.js" ></script>
+</body>
+</html>

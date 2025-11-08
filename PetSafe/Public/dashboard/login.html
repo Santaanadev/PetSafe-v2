@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PetSafe - Rastreamento Inteligente</title>
+  <link rel="stylesheet" href="../app/css/style-log.css" />
+  <link rel="shortcut icon" href="../Public/imagens/logo.ico" />
+</head>
+
+<body>
+  <header>
+    <img class="logo" src="../imagens/logo.png" alt="Logo PetSafe" />
+    <h1>PetSafe</h1>
+    <h3>Rastreamento Inteligente</h3>
+  </header>
+
+  <section>
+    <div class="caixa2">
+      <h1>FAÇA LOGIN</h1>
+      <input type="email" id="emailLogin" placeholder="email@email.com" />
+      <input type="password" id="senhaLogin" placeholder="Senha" />
+
+      <section class="registro" id="registrar">
+        <button onclick="logar()" class="btn-registrar pulse">ACESSAR</button>
+      </section>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; <span id="ano"></span> PetSafe. Todos os direitos reservados</p>
+  </footer>
+
+  <!-- Firebase SDKs Compat (mais simples para HTML sem módulo) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <script>
+    // Config Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyChNA-zH8CpAmwfR_pKIk7MFfbAEmnMSLc",
+      authDomain: "pettracker-e5ba1.firebaseapp.com",
+      projectId: "pettracker-e5ba1",
+      storageBucket: "pettracker-e5ba1.appspot.com",
+      messagingSenderId: "843455837201",
+      appId: "1:843455837201:web:0e2b17ef9915fd369f6db0"
+    };
+
+    // Inicializa Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Função login
+    function logar() {
+      const email = document.getElementById("emailLogin").value;
+      const senha = document.getElementById("senhaLogin").value;
+
+      if (!email || !senha) {
+        alert("Preencha todos os campos.");
+        return;
+      }
+
+      auth.signInWithEmailAndPassword(email, senha)
+      
+        .then((userCredential) => {
+       //   alert("Login bem-sucedido!");
+          window.location.href = "rastreio.html";
+        })
+        
+        .catch((error) => {
+          console.error("Erro no login:", error.code, error.message);
+          alert("Erro: " + error.message);
+        });
+    }
+
+    // Atualiza ano do rodapé
+    window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("ano").textContent = new Date().getFullYear();
+    });
+    document.getElementById('ano').textContent = new Date().getFullYear();
+  </script>
+  <script src="../Public/app/js/login.js"></script>
+  <script src="script.js"> </script>
+</body>
+
+</html>
